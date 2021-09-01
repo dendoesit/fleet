@@ -1,16 +1,24 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Form, Input } from "reactstrap";
 
 const Profile = () => {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-
   const form = useRef();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    if (user) {
+      setUsername(user.username);
+      setEmail(user.email);
+      setPassword(user.password);
+    }
+  });
 
   const dispatch = useDispatch();
 
