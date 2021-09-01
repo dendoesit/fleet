@@ -48,7 +48,7 @@ const vpassword = (value) => {
   }
 };
 
-const Register = () => {
+const Register = (props) => {
   const form = useRef();
   const checkBtn = useRef();
 
@@ -84,6 +84,7 @@ const Register = () => {
     if (checkBtn.current.context._errors.length === 0) {
       dispatch(register(username, email, password))
         .then(() => {
+          props.history.push("/login");
           setSuccessful(true);
         })
         .catch(() => {
@@ -143,18 +144,6 @@ const Register = () => {
               </div>
             </div>
           )}
-          {/* {message && (
-            <div className="form-group">
-              <div
-                className={
-                  successful ? "alert alert-success" : "alert alert-danger"
-                }
-                role="alert"
-              >
-                {message}
-              </div>
-            </div>
-          )} */}
           <CheckButton
             style={{
               display: "none",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Link,
@@ -6,60 +6,71 @@ import {
   Switch,
   useHistory,
 } from "react-router-dom";
-import { Col, Row } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 
 import EditLogo from "../img/edit.svg";
 import BillLogo from "../img/files.svg";
 import CarLogo from "../img/sedan-car-model.svg";
+import { getCars } from "../actions/cars";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import Editare from "./Editare";
 
 export default function Tabel() {
-  const cars = [
-    {
-      id: 1,
-      make: "audi a3",
-      registrationNumber: "BC07CDD",
-      itp: "01.07.2020",
-      rovinieta: "15.12.2020",
-      casco: "13.12.2020",
-      revizie: "12.12.2020",
-      anvelopeVara: "20.04.2020",
-      anvelopeIarna: "19.02.2020",
-    },
-  ];
+  const authToken = localStorage.getItem("token");
   const history = useHistory();
+  const [cars, setCars] = useState([]);
+
+  useEffect(() => {
+    getCars().then((data) => {
+      console.log(data.data);
+      setCars(data.data);
+    });
+  }, [authToken]);
+
+  //   const cars = data;
+  // })
+  // .catch((e) => {
+  //   console.log(e);
+  // });
 
   // const handleEdit = (e: any) => {
   //   console.log(e);
   //   history.push("/Editare");
   // };
 
-  const setData = (e: any) => {};
+  const setData = (e: any) => {
+    localStorage.setItem("carId", e.id);
+    history.push("/Editare");
+  };
+
+  const addCar = () => {
+    localStorage.setItem("carId", "");
+    history.push("/Editare");
+  };
 
   return (
     <>
       <h2>Lista Masini</h2>
+      <Button color="primary" onClick={() => addCar()}>
+        {" "}
+        Adaugare Masina
+      </Button>
       <table className="table">
-        <thead>
-          <tr>
-            {/* <th> Masina </th> <th> Nr.inmatriculare </th> <th> ITP </th>{" "}
-            <th> Rovinieta </th> <th> CASCO </th> <th> Revizie </th>{" "}
-            <th> Anvelope vara </th> <th> Anvelope iarna </th>
-            <th>Editare</th>
-            <th>Facturi</th> */}
-          </tr>
-        </thead>
         <tbody>
           {cars.map((el: any, i: number) => (
             <Row>
               <Col sm="2">
-                <div className="carName">{el.make}</div>
+                <div className="carName">
+                  {el.make} {el.model}
+                </div>
               </Col>
               <Col sm="2">
                 <div className="carName">{el.registrationNumber}</div>
               </Col>
 
               <Col sm="4">
-                <span className="importantDate">ITP : {el.itp}</span>
+                <span className="importantDate"> ITP : {el.itp}</span>
                 <span className="importantDate">
                   ROVIGNIETA : {el.rovinieta}
                 </span>
@@ -84,7 +95,7 @@ export default function Tabel() {
                 <a href="/facturi">
                   <img
                     className="fileLogo"
-                    alt="Facturi  Logo "
+                    alt="Facturi Logo "
                     src={BillLogo}
                   />
                 </a>

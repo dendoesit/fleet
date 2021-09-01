@@ -54,7 +54,7 @@ const Login = (props) => {
       console.log(usernameOrEmail, password);
       dispatch(login(usernameOrEmail, password))
         .then(() => {
-          props.history.push("/profile");
+          props.history.push("/tabel");
           window.location.reload();
         })
         .catch(() => {

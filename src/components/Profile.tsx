@@ -1,41 +1,66 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import React, { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Container, Form, Input } from "reactstrap";
 
 const Profile = () => {
-  const { user: currentUser } = useSelector((state: RootState) => state.auth);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
+  const form = useRef();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [successful, setSuccessful] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleEdit = (e: any) => {
+    e.preventDefault();
+  };
 
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>
-          <strong> {currentUser.username} </strong> Profile{" "}
-        </h3>{" "}
-      </header>{" "}
-      <p>
-        <strong> Token: </strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}{" "}
-      </p>{" "}
-      <p>
-        <strong> Id: </strong> {currentUser.id}{" "}
-      </p>{" "}
-      <p>
-        <strong> Email: </strong> {currentUser.email}{" "}
-      </p>{" "}
-      <strong> Authorities: </strong>{" "}
-      <ul>
-        {" "}
-        {currentUser.roles &&
-          currentUser.roles.map((role: any, index: any) => (
-            <li key={index}> {role} </li>
-          ))}{" "}
-      </ul>{" "}
-    </div>
+    <Container>
+      <h2>Profil</h2>
+      <Form onSubmit={handleEdit}>
+        {!successful && (
+          <div>
+            <div className="form-group">
+              <label htmlFor="username"> Nume utilizator </label>
+              <Input
+                type="text"
+                className="form-control"
+                name="username"
+                value={username}
+                onChange={(e: any) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email"> Email </label>
+              <Input
+                type="text"
+                className="form-control"
+                name="email"
+                value={email}
+                onChange={(e: any) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password"> Parola </label>
+              <Input
+                type="password"
+                className="form-control"
+                name="password"
+                value={password}
+                onChange={(e: any) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
+        <Button type="submit" color="success">
+          Salveaza Detaliile
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

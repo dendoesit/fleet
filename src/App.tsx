@@ -25,9 +25,8 @@ const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
-  // const { currentUser } = useSelector((state: RootStateOrAny) => state.auth);
-  const user = localStorage.getItem("user");
-  console.log(user);
+  const authToken = localStorage.getItem("user");
+  console.log(authToken);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,13 +56,6 @@ const App = () => {
                 Home
               </Link>
             </li>
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  Moderator Board{" "}
-                </Link>{" "}
-              </li>
-            )}
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -71,42 +63,36 @@ const App = () => {
                 </Link>{" "}
               </li>
             )}
-            {/* {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User{" "}
-                </Link>{" "}
-              </li>
-            )}{" "} */}
-          </div>
-          {/* {currentUser ? (
-            <div className="navbar-nav ml-auto">
+            {authToken && (
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  {" "}
-                  {currentUser.username}{" "}
-                </Link>{" "}
-              </li>{" "}
+                  Profil
+                </Link>
+              </li>
+            )}{" "}
+          </div>
+          {authToken ? (
+            <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={logOut}>
-                  LogOut{" "}
-                </a>{" "}
-              </li>{" "}
+                  Log Out
+                </a>
+              </li>
             </div>
           ) : (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
-                  Login{" "}
+                  Login
                 </Link>{" "}
               </li>
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
-                  Sign Up{" "}
-                </Link>{" "}
-              </li>{" "}
+                  Sign Up
+                </Link>
+              </li>
             </div>
-          )}{" "} */}
+          )}{" "}
         </nav>
         <div className="container mt-3">
           <Switch>
