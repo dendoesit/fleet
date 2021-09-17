@@ -151,7 +151,6 @@ form {
 .dropdown-menu {
   width: 100%;
   display: none;
-  position: absolute;
   a {
     text-decoration: none;
     color: black;
@@ -174,4 +173,8 @@ nav li {
 
 .navbar .container {
   background: transparent;
+}
+
+.navbar-nav .dropdown-menu {
+  position: absolute;
 }

@@ -14,16 +14,12 @@ const Facturi = () => {
   const [data, setAPIData] = useState([]);
   const bills = useAppSelector((state) => state.store);
 
-  console.log("bills");
-  console.log(bills);
   useEffect(() => {
     setAPIData(bills.bills);
   }, [bills]);
 
-  console.log(data);
   const toggle = () => setModal(!modal);
   const setData = (data: any) => {
-    console.log(data);
     toggle();
     let { id, date, serviceName, serviceProvided, price } = data;
     localStorage.setItem("ID", id);
@@ -40,7 +36,7 @@ const Facturi = () => {
         Audi A3 BC 07 CDD
       </h4>
       <Row>
-        <Col sm={{ size: 3, offset: 10 }}>
+        <Col>
           <Button color="primary" onClick={toggle}>
             Adauga Factura
           </Button>
