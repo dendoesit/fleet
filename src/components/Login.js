@@ -51,7 +51,6 @@ const Login = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      console.log(usernameOrEmail, password);
       dispatch(login(usernameOrEmail, password))
         .then(() => {
           props.history.push("/tabel");

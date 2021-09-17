@@ -10,6 +10,7 @@ import {
   Button,
   Col,
 } from "reactstrap";
+import { addBill, updateBill, deleteBill } from "../actions/bills";
 
 interface ModalFacturaProps {
   data?: any;
@@ -36,10 +37,12 @@ const ModalFactura = (props: ModalFacturaProps) => {
     console.log(e.currentTarget.files[0]);
   };
 
-  const deleteBill = (id: any) => alert("Are you sure ?");
+  const removeBill = (id: any) => {
+    alert("Are you sure ?");
+    deleteBill(id);
+  };
 
   useEffect(() => {
-    console.log(localStorage.getItem("Date"));
     setID(localStorage.getItem("ID"));
     setDate(localStorage.getItem("Date"));
     setServiceName(localStorage.getItem("Service Name"));
@@ -47,18 +50,21 @@ const ModalFactura = (props: ModalFacturaProps) => {
     setPrice(localStorage.getItem("Price"));
   }, []);
 
-  const handleInputFieldChange = (e: any) => {};
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    addBill(serviceName, serviceProvided, date).then((resp: any) => {});
+  };
+  // const handleInputFieldChange = (e: any) => {};
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <ModalBody>
         <FormGroup>
           <Label for="date">Data</Label>
           <Input
-            type="number"
+            type="date"
             name="date"
             id="date"
-            placeholder="22.01.2020"
             onChange={(e) => setDate(e.target.value)}
             value={date}
           />
@@ -79,8 +85,7 @@ const ModalFactura = (props: ModalFacturaProps) => {
             type="text"
             name="ServiceProvided"
             id="ServiceProvided"
-            placeholder="Diverse"
-            onChange={(e) => setServiceName(e.target.value)}
+            onChange={(e) => setServiceProvided(e.target.value)}
             value={serviceProvided}
           />
         </FormGroup>
@@ -90,7 +95,6 @@ const ModalFactura = (props: ModalFacturaProps) => {
             type="number"
             name="Price"
             id="Price"
-            placeholder="540"
             onChange={(e) => setPrice(e.target.value)}
             value={price}
           />
@@ -107,7 +111,7 @@ const ModalFactura = (props: ModalFacturaProps) => {
       </ModalBody>
       <ModalFooter>
         <Col>
-          <Button type="submit" color="danger" onClick={() => deleteBill(id)}>
+          <Button type="submit" color="danger" onClick={() => removeBill(id)}>
             Stergere Factura
           </Button>
         </Col>

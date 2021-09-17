@@ -55,8 +55,6 @@ export const login = (usernameOrEmail, password) => (dispatch) => {
         },
       });
 
-      console.log(data);
-
       return Promise.resolve();
     },
     (error) => {

@@ -1,13 +1,14 @@
 .editLogo,
 .deleteLogo,
-.fileLogo {
+.fileLogo,
+.logo {
   width: 20px;
   height: 20px;
 }
 
-.editLogo,
-.deleteLogo {
+.editLogo {
   cursor: pointer;
+  margin: 0 10px;
 }
 
 .billRow {
@@ -61,4 +62,116 @@ label {
 
 .navbar-nav {
   width: 100%;
+}
+
+.carLogo {
+  width: 50px;
+}
+
+.col {
+  vertical-align: middle;
+}
+
+.importantDate {
+  font-weight: bold;
+  display: block;
+}
+
+.tableRow {
+  margin-bottom: 24px;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: #f8f8f8;
+    box-shadow: 1px #f8f8f8;
+  }
+}
+
+.card {
+  background-color: white;
+  border-radius: 6px;
+}
+
+body {
+  background-color: #f8f8f8;
+}
+
+.container {
+  background-color: white;
+  padding: 24px;
+}
+
+.upside-down {
+  color: red;
+}
+
+.btn-primary {
+  float: right;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+form {
+  .btn {
+    margin: 24px 0;
+  }
+}
+
+.userLogo {
+  width: 30px;
+  height: 30px;
+}
+
+@media (min-width: 992px) {
+  .dropdown:hover .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.dropdown-toggle {
+  position: relative;
+}
+
+.dropdown-menu {
+  width: 100%;
+  display: none;
+  position: absolute;
+  a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    padding: 20px;
+    &:hover {
+      background-color: #f8f8f8;
+    }
+  }
+}
+
+nav li {
+  border-bottom: 0;
+  width: auto;
+}
+
+.navbar-nav {
+  flex-direction: row;
+}
+
+.navbar .container {
+  background: transparent;
 }

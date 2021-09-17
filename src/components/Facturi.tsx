@@ -7,18 +7,20 @@ import EditLogo from "../img/edit.svg";
 import DeleteLogo from "../img/trash.svg";
 import moment from "moment";
 import axios from "axios";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
 
 const Facturi = () => {
   const [modal, setModal] = useState(false);
   const [data, setAPIData] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`)
-      .then((response) => {
-        setAPIData(response.data);
-      });
-  }, []);
+  const bills = useAppSelector((state) => state.store);
 
+  console.log("bills");
+  console.log(bills);
+  useEffect(() => {
+    setAPIData(bills.bills);
+  }, [bills]);
+
+  console.log(data);
   const toggle = () => setModal(!modal);
   const setData = (data: any) => {
     console.log(data);
@@ -57,9 +59,12 @@ const Facturi = () => {
           <Col sm="1">
             <img className="fileLogo" alt="file logo" src={BillLogo} />
           </Col>
-          <Col sm="2"> {moment(new Date(el.date)).format("DD/MM/YYYY")}</Col>
-          <Col sm="3"> {el.serviceName}</Col>
-          <Col sm="4"> {el.serviceProvided}</Col>
+          <Col sm="2">
+            {" "}
+            {moment(new Date(el.validUntil)).format("DD/MM/YYYY")}
+          </Col>
+          <Col sm="3"> {el.description}</Col>
+          <Col sm="4"> {el.type}</Col>
           <Col> {el.price}</Col>
           <Col sm="1">
             <img

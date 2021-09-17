@@ -110,12 +110,12 @@ const Editare = (props: any) => {
             onChange={(e) => setType(e.target.value)}
             required
           >
-            <option>Autoturisme</option>
-            <option>Autoutilitare</option>
+            <option>Autoturism</option>
+            <option>Autoutilitar</option>
             <option>Agro</option>
-            <option>Camioane</option>
-            <option>Motociclete</option>
-            <option>Remorci</option>
+            <option>Camion</option>
+            <option>Motocicleta</option>
+            <option>Remorca</option>
           </Input>
         </FormGroup>
         <FormGroup>
