@@ -25,6 +25,7 @@ const Login = (props) => {
   const [usernameOrEmail, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -56,8 +57,9 @@ const Login = (props) => {
           props.history.push("/tabel");
           window.location.reload();
         })
-        .catch(() => {
+        .catch((e) => {
           setLoading(false);
+          setError("User does not exist or password is incorrect. ");
         });
     } else {
       setLoading(false);
@@ -108,6 +110,7 @@ const Login = (props) => {
               <span> Login </span>{" "}
             </button>{" "}
           </div>
+          <h6 className=".text-danger">{error}</h6>
           {/* {message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">

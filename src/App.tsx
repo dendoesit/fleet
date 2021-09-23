@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Router, Switch, Route, Link } from "react-router-dom";
+import bootstrap from "bootstrap";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 
 import Login from "./components/Login";
@@ -24,6 +24,8 @@ const App = () => {
 
   const authToken = localStorage.getItem("user");
   const dispatch = useDispatch();
+
+  console.log(authToken);
 
   useEffect(() => {
     history.listen((location) => {

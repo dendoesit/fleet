@@ -52,7 +52,9 @@ const ModalFactura = (props: ModalFacturaProps) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    addBill(serviceName, serviceProvided, date).then((resp: any) => {});
+    addBill(serviceName, serviceProvided, date.toString()).then(
+      (resp: any) => {}
+    );
   };
   // const handleInputFieldChange = (e: any) => {};
 

@@ -8,7 +8,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
-    "bootstrap": "^5.1.0",
+    "bootstrap": "^5.1.1",
     "bootstrap-icons": "^1.5.0",
     "moment": "^2.29.1",
     "node-sass": "^6.0.1",
@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.1.6",
     "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",

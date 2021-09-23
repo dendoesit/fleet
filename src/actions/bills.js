@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://fleet-dd.herokuapp.com/fleet/api/";
+const API_URL = "http://fleet-dd.herokuapp.com/fleet/api/bill";
 
 const auth = localStorage.getItem("token");
 
@@ -10,13 +10,14 @@ const config = {
 const payload = {};
 const carId = localStorage.getItem("carId");
 
-export const addBill = (description, type, validUntil) => {
+export const addBill = (provider, description, date) => {
   return axios.post(
-    API_URL + "car/" + carId + "/bill",
+    API_URL,
     {
+      carId,
+      provider,
       description,
-      type,
-      validUntil,
+      date,
     },
     config
   );
@@ -33,4 +34,6 @@ export const updateBill = (
   revisionDate
 ) => {};
 
-export const deleteBill = (billId) => {};
+export const deleteBill = (billId) => {
+  return axios.delete(API_URL + billId);
+};

@@ -27,6 +27,7 @@ export const addCar = (
   revisionDate,
   serviceDate
 ) => {
+  console.log(type);
   return axios.post(
     API_URL + "car",
     {

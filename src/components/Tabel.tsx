@@ -30,6 +30,7 @@ export default function Tabel() {
 
   useEffect(() => {
     getCars().then((data) => {
+      console.log(data.data);
       setCars(data.data);
     });
   }, [authToken]);
@@ -82,7 +83,7 @@ export default function Tabel() {
             </h4>
           </Col>
           <Col sm="2">
-            <div className="carName">{el.registrationNumber}</div>
+            <div className="carName">{el.registration}</div>
           </Col>
 
           <Col sm="3">
@@ -104,10 +105,7 @@ export default function Tabel() {
               className="bi bi-chevron-down"
               viewBox="0 0 16 16"
             >
-              <path
-                fill-rule="evenodd"
-                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-              />
+              <path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
             </svg>
           </Col>
           <UncontrolledCollapse toggler={"#toggler" + i}>

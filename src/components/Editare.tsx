@@ -17,8 +17,8 @@ const Editare = (props: any) => {
   const history = useHistory();
 
   const handleSubmit = (e: any) => {
-    console.log(make, model);
     e.preventDefault();
+    console.log(type);
     carId
       ? updateCar(
           carId,
@@ -30,7 +30,6 @@ const Editare = (props: any) => {
           cascoDate,
           serviceDate
         ).then((resp: any) => {
-          console.log(resp);
           history.push("/tabel");
         })
       : addCar(
@@ -110,6 +109,10 @@ const Editare = (props: any) => {
             onChange={(e) => setType(e.target.value)}
             required
           >
+            <option value="" selected disabled hidden>
+              Choose here
+            </option>
+
             <option>Autoturism</option>
             <option>Autoutilitar</option>
             <option>Agro</option>

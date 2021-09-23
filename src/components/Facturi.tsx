@@ -14,6 +14,7 @@ const Facturi = () => {
   const [data, setAPIData] = useState([]);
   const bills = useAppSelector((state) => state.store);
 
+  console.log(data);
   useEffect(() => {
     setAPIData(bills.bills);
   }, [bills]);
@@ -56,7 +57,6 @@ const Facturi = () => {
             <img className="fileLogo" alt="file logo" src={BillLogo} />
           </Col>
           <Col sm="2">
-            {" "}
             {moment(new Date(el.validUntil)).format("DD/MM/YYYY")}
           </Col>
           <Col sm="3"> {el.description}</Col>
