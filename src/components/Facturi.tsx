@@ -15,6 +15,11 @@ const Facturi = () => {
   const bills = useAppSelector((state) => state.store);
 
   console.log(data);
+  data.sort(function (a: any, b: any) {
+    var dateA = new Date(a.date).getTime();
+    var dateB = new Date(b.date).getTime();
+    return dateA > dateB ? 1 : -1;
+  });
   useEffect(() => {
     setAPIData(bills.bills);
   }, [bills]);
@@ -22,13 +27,19 @@ const Facturi = () => {
   const toggle = () => setModal(!modal);
   const setData = (data: any) => {
     toggle();
-    let { id, date, serviceName, serviceProvided, price } = data;
+    let { id, date, provider, description, price, type } = data;
     localStorage.setItem("ID", id);
     localStorage.setItem("Date", date);
-    localStorage.setItem("Service Name", serviceName);
-    localStorage.setItem("Service Provided", serviceProvided);
+    localStorage.setItem("Provider", provider);
+    localStorage.setItem("Description", description);
     localStorage.setItem("Price", price);
+    localStorage.setItem("Type", type);
   };
+  let uniqueYears: any = [];
+  data.map((item: any) => {
+    uniqueYears.push(item.date.substring(0, 4));
+  });
+  uniqueYears = [...new Set(uniqueYears)].sort();
 
   return (
     <>
@@ -45,32 +56,36 @@ const Facturi = () => {
       </Row>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Adaugare Factura</ModalHeader>
-        <ModalFactura />
+        <ModalFactura toggle={toggle} />
       </Modal>
-      <Row>
+      <div className="tablehead">
         <b>2020 </b>
-      </Row>
+        <p>Data</p>
+        <p> Service</p>
+        <p>Descriere</p>
+        <p> Tip factura</p>
+        <p>Pret</p>
+        <p> Editare</p>
+      </div>
       <hr></hr>
+
       {data.map((el: any, i: number) => (
-        <Row key={i} className="billRow">
-          <Col sm="1">
-            <img className="fileLogo" alt="file logo" src={BillLogo} />
-          </Col>
-          <Col sm="2">
-            {moment(new Date(el.validUntil)).format("DD/MM/YYYY")}
-          </Col>
-          <Col sm="3"> {el.description}</Col>
-          <Col sm="4"> {el.type}</Col>
-          <Col> {el.price}</Col>
-          <Col sm="1">
+        <div key={i} className="billRow">
+          <img className="fileLogo" alt="file logo" src={BillLogo} />
+          <p>{moment(new Date(el.date)).format("DD/MM/YYYY")}</p>
+          <p>{el.provider}</p>
+          <p> {el.description}</p>
+          <p>{el.type}</p>
+          <p>{el.price}</p>
+          <p>
             <img
               className="editLogo"
               alt="Edit Logo "
               src={EditLogo}
               onClick={() => setData(el)}
             />
-          </Col>
-        </Row>
+          </p>
+        </div>
       ))}
     </>
   );

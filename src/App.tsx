@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Router, Switch, Route, Link } from "react-router-dom";
+import { Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import bootstrap from "bootstrap";
 
 import "./App.scss";
@@ -105,6 +105,17 @@ const App = () => {
         </nav>
         <div className="container mt-3">
           <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return authToken ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <Redirect to="/home" />
+                );
+              }}
+            />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />

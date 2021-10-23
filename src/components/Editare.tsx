@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps, useLocation, useHistory } from "react-router-dom";
-import { Form, FormGroup, Label, Input, Button, Col } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
 import { getCar, updateCar, addCar, deleteCar } from "../actions/cars";
+var DatePicker = require("reactstrap-date-picker");
 
 const Editare = (props: any) => {
   const [make, setMake] = useState("");
@@ -10,7 +11,9 @@ const Editare = (props: any) => {
   const [registration, setRegistration] = useState<any | null>(null);
   const [itpDate, setItpDate] = useState<any | null>(null);
   const [cascoDate, setCascoDate] = useState<any | null>(null);
-  const [serviceDate, setServiceDate] = useState<any | null>(null);
+  const [revisionDate, setRevisionDate] = useState<any | "">("2022-10-10");
+  const [vignetteDate, setVignetteDate] = useState<any | "">("2022-10-10");
+  const [rcaDate, setRcaDate] = useState<any | "">("2022-10-10");
   const [cars, setCars] = useState([]);
 
   const carId = localStorage.getItem("carId");
@@ -18,7 +21,7 @@ const Editare = (props: any) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(type);
+    console.log(e);
     carId
       ? updateCar(
           carId,
@@ -27,19 +30,20 @@ const Editare = (props: any) => {
           type,
           registration,
           itpDate,
-          cascoDate,
-          serviceDate
+          cascoDate
         ).then((resp: any) => {
           history.push("/tabel");
         })
       : addCar(
           make,
           model,
-          type,
           registration,
+          type,
           itpDate,
+          rcaDate,
+          vignetteDate,
           cascoDate,
-          serviceDate
+          revisionDate
         ).then((resp: any) => {
           history.push("/tabel");
         });
@@ -51,11 +55,13 @@ const Editare = (props: any) => {
         let {
           make,
           model,
-          type,
           registration,
+          type,
           itpDate,
+          rcaDate,
+          vignetteDate,
           cascoDate,
-          serviceDate,
+          revisionDate,
         } = resp.data;
         setMake(make);
         setModel(model);
@@ -63,7 +69,7 @@ const Editare = (props: any) => {
         setRegistration(registration);
         setItpDate(itpDate);
         setCascoDate(cascoDate);
-        setServiceDate(serviceDate);
+        setRcaDate(rcaDate);
       });
     }
   }, [carId]);
@@ -132,44 +138,76 @@ const Editare = (props: any) => {
             value={registration}
           />
         </FormGroup>
-        <FormGroup>
-          <Label for="itp"> Data expirare ITP</Label>
-          <Input
-            type="date"
-            name="itpDate"
-            id="date"
-            onChange={(e) => setItpDate(e.target.value)}
-            value={itpDate}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="casco"> Data expirare Casco</Label>
-          <Input
-            type="date"
-            name="cascoDate"
-            id="date"
-            onChange={(e) => setCascoDate(e.target.value)}
-            value={cascoDate}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="service">Data Expirare Revizie</Label>
-          <Input
-            type="date"
-            name="serviceDate"
-            id="date"
-            onChange={(e) => setServiceDate(e.target.value)}
-            value={serviceDate}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="itp">Anvelope vara</Label>
-          <Input type="date" name="summerTyres" id="date" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="itp">Anvelope iarna</Label>
-          <Input type="date" name="winterTyres" id="date" />
-        </FormGroup>
+        <Row>
+          <Col>
+            <FormGroup>
+              <Label for="itp"> Data expirare ITP</Label>
+              <DatePicker
+                name="itpDate"
+                id="date"
+                dateFormat="DD/MM/YYYY"
+                value={itpDate}
+                onChange={(e: any) => setItpDate(e.split("T")[0])}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col>
+            <FormGroup>
+              <Label for="casco"> Data expirare Casco</Label>
+              <DatePicker
+                name="cascoDate"
+                id="date"
+                dateFormat="DD/MM/YYYY"
+                value={cascoDate}
+                onChange={(e: any) => setCascoDate(e.split("T")[0])}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <FormGroup>
+              <Label for="service">Data Expirare Revizie</Label>
+              <DatePicker
+                name="revisionDate"
+                id="date"
+                dateFormat="DD/MM/YYYY"
+                value={revisionDate}
+                onChange={(e: any) => setRevisionDate(e.split("T")[0])}
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="service">Data Expirare Vignieta</Label>
+              <DatePicker
+                name="vignetteDate"
+                id="date"
+                dateFormat="DD/MM/YYYY"
+                value={vignetteDate}
+                onChange={(e: any) => setVignetteDate(e.split("T")[0])}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <FormGroup>
+              <Label for="itp">Anvelope vara</Label>
+              <Input type="date" name="summerTyres" id="date" />
+            </FormGroup>
+          </Col>
+
+          <Col>
+            <FormGroup>
+              <Label for="itp">Anvelope iarna</Label>
+              <DatePicker id="example-datepicker" dateFormat="DD/MM/YYYY" />
+            </FormGroup>
+          </Col>
+        </Row>
+
         {carId ? (
           <Col className="mt-5">
             <Button type="submit" color="primary">

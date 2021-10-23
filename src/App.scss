@@ -62,6 +62,12 @@ label {
 
 .navbar-nav {
   width: 100%;
+  flex-direction: row !important;
+}
+
+.nav-item {
+  min-width: 20%;
+  font-size: 24px;
 }
 
 .carLogo {
@@ -181,4 +187,15 @@ nav li {
 
 .text-danger {
   color: red;
+}
+
+.carName {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.tablehead,
+.billRow {
+  display: grid;
+  grid-template-columns: 50px 100px 1fr 1fr 150px 150px 100px;
 }

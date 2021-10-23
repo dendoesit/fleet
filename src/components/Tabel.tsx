@@ -60,7 +60,7 @@ export default function Tabel() {
   };
 
   return (
-    <Container>
+    <>
       <Row>
         <Col className="text-left mb-5">
           <h2>Lista Masini</h2>
@@ -75,6 +75,7 @@ export default function Tabel() {
       {cars.map((el: any, i: number) => (
         <Row className="tableRow" key={i} id={"toggler" + i}>
           <Col sm="1">
+            {el.type}
             <img className="carLogo" alt="car Logo " src={getCarImg(el.type)} />
           </Col>
           <Col sm="2">
@@ -83,7 +84,9 @@ export default function Tabel() {
             </h4>
           </Col>
           <Col sm="2">
-            <div className="carName">{el.registration}</div>
+            <h4>
+              <div className="carName">{el.registration}</div>
+            </h4>
           </Col>
 
           <Col sm="3">
@@ -120,22 +123,13 @@ export default function Tabel() {
                     <p>Distributie</p>
                     <p>Frane</p>
                   </Col>
-                  <Col>
-                    <img
-                      className="editLogo"
-                      alt="Edit Logo "
-                      src={EditLogo}
-                      onClick={() => setData(el)}
-                    />
-
-                    <a href="/facturi">
-                      <img
-                        className="fileLogo"
-                        alt="Facturi Logo "
-                        src={BillLogo}
-                        onClick={() => setBill(el)}
-                      />
-                    </a>
+                  <Col className="d-flex justify-content-around">
+                    <Button color="warning" onClick={() => setData(el)}>
+                      Editare Masina
+                    </Button>
+                    <Button color="info" onClick={() => setBill(el)}>
+                      Facturi Masina
+                    </Button>
                   </Col>
                 </Row>
               </CardBody>
@@ -143,6 +137,6 @@ export default function Tabel() {
           </UncontrolledCollapse>
         </Row>
       ))}
-    </Container>
+    </>
   );
 }

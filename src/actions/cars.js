@@ -20,12 +20,13 @@ export const getCar = (carId) => {
 export const addCar = (
   make,
   model,
-  type,
   registration,
+  type,
   itpDate,
+  rcaDate,
+  vignetteDate,
   cascoDate,
-  revisionDate,
-  serviceDate
+  revisionDate
 ) => {
   console.log(type);
   return axios.post(
@@ -38,7 +39,8 @@ export const addCar = (
       itpDate,
       cascoDate,
       revisionDate,
-      serviceDate,
+      vignetteDate,
+      rcaDate,
     },
     config
   );

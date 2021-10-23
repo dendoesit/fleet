@@ -10,7 +10,14 @@ const config = {
 const payload = {};
 const carId = localStorage.getItem("carId");
 
-export const addBill = (provider, description, date) => {
+export const addBill = (
+  provider,
+  description,
+  date,
+  type,
+  price,
+  validUntil
+) => {
   return axios.post(
     API_URL,
     {
@@ -18,6 +25,9 @@ export const addBill = (provider, description, date) => {
       provider,
       description,
       date,
+      type,
+      price,
+      validUntil,
     },
     config
   );
