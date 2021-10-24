@@ -12,7 +12,7 @@ const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        Acest camp este obligatoriu.
       </div>
     );
   }
@@ -22,7 +22,7 @@ const validEmail = (value) => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-danger" role="alert">
-        This is not a valid email.{" "}
+        Email nu este valid.
       </div>
     );
   }
@@ -32,7 +32,7 @@ const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.{" "}
+        Numele de utilizator trebuie sa aiba minim 3 caractere.
       </div>
     );
   }
@@ -48,6 +48,16 @@ const vpassword = (value) => {
   }
 };
 
+const validPhone = (value) => {
+  if (value.length < 10 || value.length > 10) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Numarul de telefon nu poate avea mai mult de 10 caractere.
+      </div>
+    );
+  }
+};
+
 const Register = (props) => {
   const form = useRef();
   const checkBtn = useRef();
@@ -55,6 +65,7 @@ const Register = (props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [successful, setSuccessful] = useState(false);
 
   const dispatch = useDispatch();
@@ -73,6 +84,10 @@ const Register = (props) => {
     const password = e.target.value;
     setPassword(password);
   };
+  const onChangePhone = (e) => {
+    const phoneNumber = e.target.value;
+    setPhoneNumber(phoneNumber);
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -82,7 +97,7 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      dispatch(register(username, email, password))
+      dispatch(register(username, email, password, phoneNumber))
         .then(() => {
           props.history.push("/login");
           setSuccessful(true);
@@ -116,6 +131,17 @@ const Register = (props) => {
                 />
               </div>
               <div className="form-group">
+                <label htmlFor="password"> Parola </label>
+                <Input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  value={password}
+                  onChange={onChangePassword}
+                  validations={[required, vpassword]}
+                />
+              </div>
+              <div className="form-group">
                 <label htmlFor="email"> Email </label>
                 <Input
                   type="text"
@@ -127,16 +153,17 @@ const Register = (props) => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password"> Parola </label>
+                <label htmlFor="phone"> Numar telefon </label>
                 <Input
-                  type="password"
+                  type="number"
                   className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={onChangePassword}
-                  validations={[required, vpassword]}
+                  name="phoneNumber"
+                  value={phoneNumber}
+                  onChange={onChangePhone}
+                  validations={[validPhone]}
                 />
               </div>
+
               <div className="form-group">
                 <button className="btn btn-primary btn-block">
                   Inregistrare

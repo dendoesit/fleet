@@ -7,8 +7,11 @@ const config = {
   headers: { Authorization: `Bearer ${auth}` },
 };
 
-const payload = {};
 const carId = localStorage.getItem("carId");
+
+export const getBills = () => {
+  return axios.get(API_URL + "/car/" + carId, config);
+};
 
 export const addBill = (
   provider,

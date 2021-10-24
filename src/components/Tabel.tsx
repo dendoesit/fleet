@@ -54,9 +54,9 @@ export default function Tabel() {
 
   const getCarImg = (type: any) => {
     if (!type) {
-      return Autoturism;
+      return "Autoturism";
     }
-    return type;
+    return { type };
   };
 
   return (
@@ -76,7 +76,7 @@ export default function Tabel() {
         <Row className="tableRow" key={i} id={"toggler" + i}>
           <Col sm="1">
             {el.type}
-            <img className="carLogo" alt="car Logo " src={getCarImg(el.type)} />
+            <img className="carLogo" alt="car Logo " src={Autoturism} />
           </Col>
           <Col sm="2">
             <h4>

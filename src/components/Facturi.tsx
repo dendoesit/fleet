@@ -7,22 +7,17 @@ import EditLogo from "../img/edit.svg";
 import DeleteLogo from "../img/trash.svg";
 import moment from "moment";
 import axios from "axios";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { getBills } from "../actions/bills";
 
 const Facturi = () => {
   const [modal, setModal] = useState(false);
-  const [data, setAPIData] = useState([]);
-  const bills = useAppSelector((state) => state.store);
+  const [bills, setBills] = useState<any | []>([]);
 
-  console.log(data);
-  data.sort(function (a: any, b: any) {
-    var dateA = new Date(a.date).getTime();
-    var dateB = new Date(b.date).getTime();
-    return dateA > dateB ? 1 : -1;
-  });
   useEffect(() => {
-    setAPIData(bills.bills);
-  }, [bills]);
+    getBills().then((data) => {
+      setBills(data.data);
+    });
+  }, []);
 
   const toggle = () => setModal(!modal);
   const setData = (data: any) => {
@@ -35,11 +30,11 @@ const Facturi = () => {
     localStorage.setItem("Price", price);
     localStorage.setItem("Type", type);
   };
-  let uniqueYears: any = [];
-  data.map((item: any) => {
-    uniqueYears.push(item.date.substring(0, 4));
+  const test = Object.entries(bills).map((item: any) => {
+    console.log(bills);
   });
-  uniqueYears = [...new Set(uniqueYears)].sort();
+
+  const years = Object.keys(bills);
 
   return (
     <>
@@ -59,7 +54,7 @@ const Facturi = () => {
         <ModalFactura toggle={toggle} />
       </Modal>
       <div className="tablehead">
-        <b>2020 </b>
+        <b> </b>
         <p>Data</p>
         <p> Service</p>
         <p>Descriere</p>
@@ -69,24 +64,29 @@ const Facturi = () => {
       </div>
       <hr></hr>
 
-      {data.map((el: any, i: number) => (
-        <div key={i} className="billRow">
-          <img className="fileLogo" alt="file logo" src={BillLogo} />
-          <p>{moment(new Date(el.date)).format("DD/MM/YYYY")}</p>
-          <p>{el.provider}</p>
-          <p> {el.description}</p>
-          <p>{el.type}</p>
-          <p>{el.price}</p>
-          <p>
-            <img
-              className="editLogo"
-              alt="Edit Logo "
-              src={EditLogo}
-              onClick={() => setData(el)}
-            />
-          </p>
-        </div>
-      ))}
+      {Object.entries(bills).map((item: any) =>
+        item[1].map((el: any, i: number) => (
+          <>
+            {i < 1 && item[0]}
+            <div key={i} className="billRow">
+              <img className="fileLogo" alt="file logo" src={BillLogo} />
+              <p>{moment(new Date(el.date)).format("DD/MM/YYYY")}</p>
+              <p>{el.provider}</p>
+              <p> {el.description}</p>
+              <p>{el.type}</p>
+              <p>{el.price}</p>
+              <p>
+                <img
+                  className="editLogo"
+                  alt="Edit Logo "
+                  src={EditLogo}
+                  onClick={() => setData(el)}
+                />
+              </p>
+            </div>
+          </>
+        ))
+      )}
     </>
   );
 };
