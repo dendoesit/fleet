@@ -7,8 +7,6 @@ const config = {
   headers: { Authorization: `Bearer ${auth}` },
 };
 
-const payload = {};
-
 export const getCars = () => {
   return axios.get(API_URL + "car", config);
 };

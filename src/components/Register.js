@@ -97,7 +97,7 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      dispatch(register(username, email, password, phoneNumber))
+      dispatch(register(username, email, password, phoneNumber, true, true))
         .then(() => {
           props.history.push("/login");
           setSuccessful(true);
