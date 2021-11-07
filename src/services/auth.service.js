@@ -35,6 +35,7 @@ const login = (usernameOrEmail, password) => {
 const logout = () => {
   localStorage.removeItem("user");
   localStorage.removeItem("token");
+  localStorage.removeItem("userId");
 };
 
 export default {

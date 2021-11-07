@@ -22,7 +22,7 @@ const validEmail = (value) => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-danger" role="alert">
-        Email nu este valid.
+        Emailul nu este valid.
       </div>
     );
   }
@@ -32,7 +32,7 @@ const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        Numele de utilizator trebuie sa aiba minim 3 caractere.
+        Numele de utilizator trebuie sa contina minim 3 caractere.
       </div>
     );
   }
@@ -42,17 +42,17 @@ const vpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
     return (
       <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.{" "}
+        Parola trebuie sa contina minim 6 caractere
       </div>
     );
   }
 };
 
 const validPhone = (value) => {
-  if (value.length < 10 || value.length > 10) {
+  if (value.length < 9 || value.length > 9) {
     return (
       <div className="alert alert-danger" role="alert">
-        Numarul de telefon nu poate avea mai mult de 10 caractere.
+        Numarul de telefon nu poate avea mai mult sau mai putin de 9 caractere.
       </div>
     );
   }
@@ -161,6 +161,7 @@ const Register = (props) => {
                   value={phoneNumber}
                   onChange={onChangePhone}
                   validations={[validPhone]}
+                  placeholder="0724456789"
                 />
               </div>
 

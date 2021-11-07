@@ -2,26 +2,35 @@ import React, { useEffect, useState } from "react";
 import { RouteComponentProps, useLocation, useHistory } from "react-router-dom";
 import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
 import { getCar, updateCar, addCar, deleteCar } from "../actions/cars";
-var DatePicker = require("reactstrap-date-picker");
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Editare = (props: any) => {
   const [make, setMake] = useState("");
   const [model, setModel] = useState<any | null>(null);
   const [type, setType] = useState<any | null>(null);
   const [registration, setRegistration] = useState<any | null>(null);
-  const [itpDate, setItpDate] = useState<any | null>(null);
-  const [cascoDate, setCascoDate] = useState<any | null>(null);
-  const [revisionDate, setRevisionDate] = useState<any | "">("2022-10-10");
-  const [vignetteDate, setVignetteDate] = useState<any | "">("2022-10-10");
-  const [rcaDate, setRcaDate] = useState<any | "">("2022-10-10");
+  const [itpDate, setItpDate] = useState(new Date());
+  const [cascoDate, setCascoDate] = useState(new Date());
+  const [revisionDate, setRevisionDate] = useState(new Date());
+  const [vignetteDate, setVignetteDate] = useState(new Date());
+  const [rcaDate, setRcaDate] = useState(new Date());
   const [cars, setCars] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const carId = localStorage.getItem("carId");
   const history = useHistory();
-
+  const convertDate = (inputFormat: any) => {
+    function pad(s: any) {
+      return s < 10 ? "0" + s : s;
+    }
+    var d = new Date(inputFormat);
+    return [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-");
+  };
   const handleSubmit = (e: any) => {
+    setLoading(true);
     e.preventDefault();
-    console.log(e);
     carId
       ? updateCar(
           carId,
@@ -39,14 +48,20 @@ const Editare = (props: any) => {
           model,
           registration,
           type,
-          itpDate,
-          rcaDate,
-          vignetteDate,
-          cascoDate,
-          revisionDate
-        ).then((resp: any) => {
-          history.push("/tabel");
-        });
+          convertDate(itpDate),
+          convertDate(cascoDate),
+          convertDate(rcaDate),
+          convertDate(vignetteDate),
+          convertDate(revisionDate)
+        )
+          .then((resp: any) => {
+            setLoading(false);
+            history.push("/tabel");
+          })
+          .catch((e) => {
+            setLoading(false);
+            console.log(e);
+          });
   };
 
   useEffect(() => {
@@ -79,6 +94,8 @@ const Editare = (props: any) => {
       history.push("/tabel");
     });
   };
+
+  console.log(convertDate(itpDate));
 
   return (
     <>
@@ -132,97 +149,107 @@ const Editare = (props: any) => {
           <Input
             type="text"
             name="registration"
-            id="date"
             placeholder="BC 07 CSS"
             onChange={(e) => setRegistration(e.target.value)}
             value={registration}
+            required
           />
         </FormGroup>
         <Row>
-          <Col>
+          <Col md="6">
             <FormGroup>
               <Label for="itp"> Data expirare ITP</Label>
               <DatePicker
                 name="itpDate"
                 id="date"
-                dateFormat="DD/MM/YYYY"
-                value={itpDate}
-                onChange={(e: any) => setItpDate(e.split("T")[0])}
+                dateFormat="dd/MM/yyyy"
+                selected={itpDate}
+                placeholderText="Alege o data"
+                onChange={(e: any) => setItpDate(e)}
               />
             </FormGroup>
           </Col>
 
-          <Col>
+          <Col md="6">
             <FormGroup>
               <Label for="casco"> Data expirare Casco</Label>
               <DatePicker
                 name="cascoDate"
                 id="date"
-                dateFormat="DD/MM/YYYY"
-                value={cascoDate}
-                onChange={(e: any) => setCascoDate(e.split("T")[0])}
+                dateFormat="dd/MM/yyyy"
+                selected={cascoDate}
+                onChange={(e: any) => setCascoDate(e)}
               />
             </FormGroup>
           </Col>
         </Row>
         <Row>
-          <Col>
+          <Col md="6">
             <FormGroup>
               <Label for="service">Data Expirare Revizie</Label>
               <DatePicker
                 name="revisionDate"
                 id="date"
-                dateFormat="DD/MM/YYYY"
-                value={revisionDate}
-                onChange={(e: any) => setRevisionDate(e.split("T")[0])}
+                dateFormat="dd/MM/yyyy"
+                selected={revisionDate}
+                onChange={(e: any) => setRevisionDate(e)}
               />
             </FormGroup>
           </Col>
-          <Col>
+          <Col md="6">
             <FormGroup>
               <Label for="service">Data Expirare Vignieta</Label>
               <DatePicker
                 name="vignetteDate"
                 id="date"
-                dateFormat="DD/MM/YYYY"
-                value={vignetteDate}
-                onChange={(e: any) => setVignetteDate(e.split("T")[0])}
+                dateFormat="dd/MM/yyyy"
+                selected={vignetteDate}
+                onChange={(e: any) => setVignetteDate(e)}
               />
             </FormGroup>
           </Col>
         </Row>
 
-        <Row>
+        {/* <Row>
           <Col>
             <FormGroup>
               <Label for="itp">Anvelope vara</Label>
-              <Input type="date" name="summerTyres" id="date" />
+              <Input
+                type="date"
+                name="summerTyres"
+                id="date"
+                format="dd-mm-yyyy"
+              />
             </FormGroup>
           </Col>
 
           <Col>
             <FormGroup>
               <Label for="itp">Anvelope iarna</Label>
-              <DatePicker id="example-datepicker" dateFormat="DD/MM/YYYY" />
+              <Input type="date" name="summerTyres" id="date" />
             </FormGroup>
           </Col>
-        </Row>
+        </Row> */}
 
         {carId ? (
-          <Col className="mt-5">
-            <Button type="submit" color="primary">
-              Salvare Masina
-            </Button>
-            <Button color="danger" onClick={() => deleteObj()}>
-              Sterge Masina
-            </Button>
-          </Col>
+          <Row>
+            <Col className="mt-5">
+              <Button type="submit" color="primary" disabled={loading}>
+                Salvare Masina
+              </Button>
+              <Button color="danger" onClick={() => deleteObj()}>
+                Sterge Masina
+              </Button>
+            </Col>
+          </Row>
         ) : (
-          <Col>
-            <Button type="submit" color="primary">
-              Adaugare Masina
-            </Button>
-          </Col>
+          <Row>
+            <Col>
+              <Button type="submit" color="primary" disabled={loading}>
+                Adaugare Masina
+              </Button>
+            </Col>
+          </Row>
         )}
       </Form>
     </>

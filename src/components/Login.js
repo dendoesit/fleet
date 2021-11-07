@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -28,9 +29,6 @@ const Login = (props) => {
   const [error, setError] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
-
-  // const { isLoggedIn } = useSelector((state) => state.auth);
-  // const { message } = useSelector((state) => state.message);
 
   const dispatch = useDispatch();
 
@@ -66,9 +64,10 @@ const Login = (props) => {
     }
   };
 
-  // if (isLoggedIn) {
-  //   return <Redirect to="/profile" />;
-  // }
+  const isLoggedIn = localStorage.getItem("userId");
+  if (isLoggedIn) {
+    return <Redirect to="/profile" />;
+  }
 
   return (
     <div className="col-md-12">
@@ -80,7 +79,7 @@ const Login = (props) => {
         />
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">
-            <label htmlFor="usernameOrEmail"> Username </label>{" "}
+            <label htmlFor="usernameOrEmail"> Username </label>
             <Input
               type="text"
               className="form-control"
@@ -88,10 +87,10 @@ const Login = (props) => {
               value={usernameOrEmail}
               onChange={onChangeUsername}
               validations={[required]}
-            />{" "}
+            />
           </div>
           <div className="form-group">
-            <label htmlFor="password"> Password </label>{" "}
+            <label htmlFor="password"> Password </label>
             <Input
               type="password"
               className="form-control"
@@ -99,34 +98,31 @@ const Login = (props) => {
               value={password}
               onChange={onChangePassword}
               validations={[required]}
-            />{" "}
+            />
           </div>
+          <Link to={"/forgot"} className="nav-link">
+            Am uitat parola
+          </Link>
           <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              {" "}
+            <button
+              className="btn btn-primary btn-block mt-1"
+              disabled={loading}
+            >
               {loading && (
                 <span className="spinner-border spinner-border-sm"> </span>
-              )}{" "}
-              <span> Login </span>{" "}
-            </button>{" "}
+              )}
+              <span> Login </span>
+            </button>
           </div>
           <h6 className=".text-danger">{error}</h6>
-          {/* {message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {" "}
-                {message}{" "}
-              </div>{" "}
-            </div>
-          )}{" "} */}
           <CheckButton
             style={{
               display: "none",
             }}
             ref={checkBtn}
-          />{" "}
-        </Form>{" "}
-      </div>{" "}
+          />
+        </Form>
+      </div>
     </div>
   );
 };

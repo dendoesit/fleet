@@ -17,7 +17,6 @@ const Profile = () => {
   useEffect(() => {
     getUser().then((data: any) => {
       const user = data.data;
-      console.log(data);
 
       if (user) {
         localStorage.setItem("userId", user.id);

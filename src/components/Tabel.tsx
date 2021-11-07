@@ -71,7 +71,9 @@ export default function Tabel() {
           </Button>
         </Col>
       </Row>
-
+      {cars && (
+        <p> Nu a fost gasita nici o masina. Hai sa incepem sa adaugam una.</p>
+      )}
       {cars.map((el: any, i: number) => (
         <Row className="tableRow" key={i} id={"toggler" + i}>
           <Col sm="1">

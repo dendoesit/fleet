@@ -16,7 +16,7 @@ import { history } from "./helpers/history";
 import Editare from "./components/Editare";
 import Facturi from "./components/Facturi";
 import User from "../src/img/user.svg";
-import { Container } from "reactstrap";
+import { Forgot } from "./components/Forgot";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -89,7 +89,7 @@ const App = () => {
               )}
             </div>
           ) : (
-            <div className="navbar-nav">
+            <div className="navbar-nav justify-content-end">
               <li className="nav-item float-right">
                 <Link to={"/login"} className="nav-link">
                   Login
@@ -97,7 +97,7 @@ const App = () => {
               </li>
               <li className="nav-item">
                 <Link to={"/register"} className="nav-link">
-                  Sign Up
+                  Inregistrare
                 </Link>
               </li>
             </div>
@@ -122,6 +122,7 @@ const App = () => {
             <Route path="/tabel" component={Tabel} />
             <Route path="/editare" component={Editare} />
             <Route path="/facturi" component={Facturi} />
+            <Route path="/forgot" component={Forgot} />
           </Switch>
         </div>
       </div>

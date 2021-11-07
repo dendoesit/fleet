@@ -199,3 +199,14 @@ nav li {
   display: grid;
   grid-template-columns: 50px 100px 1fr 1fr 150px 150px 100px;
 }
+
+#date {
+  width: 100%;
+  border-radius: 4px;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ced4da;
+  &:focus {
+    outline: 1px solid #86b7fe;
+    box-shadow: 0 0 0 4px #86b7fe;
+  }
+}
