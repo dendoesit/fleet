@@ -78,13 +78,16 @@ const Editare = (props: any) => {
           cascoDate,
           revisionDate,
         } = resp.data;
+
         setMake(make);
         setModel(model);
         setType(type);
         setRegistration(registration);
-        setItpDate(itpDate);
-        setCascoDate(cascoDate);
-        setRcaDate(rcaDate);
+        setItpDate(new Date(itpDate));
+        setCascoDate(new Date(cascoDate));
+        setRcaDate(new Date(rcaDate));
+        setVignetteDate(new Date(vignetteDate));
+        setRevisionDate(new Date(revisionDate));
       });
     }
   }, [carId]);
